@@ -1,0 +1,115 @@
+<div class="terminal">
+  <section class="panel card">
+    <header class="panel__header">
+      <div>
+        <div class="panel__title">Process Payment</div>
+        <div class="panel__subtitle muted">Submit a transaction via the Switch Service</div>
+      </div>
+
+      @if (isSubmitting()) {
+        <app-loading-spinner label="Processing..." />
+      }
+    </header>
+
+    @if (apiError()) {
+      <div class="alert alert--danger" role="alert">
+        <div class="alert__title">Request failed</div>
+        <div class="alert__message">{{ apiError() }}</div>
+      </div>
+    }
+
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label class="label" for="pan">PAN (Card Number)</label>
+        <input
+          id="pan"
+          class="input mono"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder="4111111111111111"
+          formControlName="pan"
+          [attr.aria-invalid]="!!panError"
+        />
+        @if (panError) {
+          <div class="hint hint--danger">{{ panError }}</div>
+        } @else {
+          <div class="hint muted">16 digits, numbers only</div>
+        }
+      </div>
+
+      <div class="field">
+        <label class="label" for="merchant">Merchant</label>
+        <input
+          id="merchant"
+          class="input"
+          type="text"
+          autocomplete="organization"
+          placeholder="Amazon"
+          formControlName="merchant"
+          [attr.aria-invalid]="!!merchantError"
+        />
+        @if (merchantError) {
+          <div class="hint hint--danger">{{ merchantError }}</div>
+        } @else {
+          <div class="hint muted">Enter the merchant name</div>
+        }
+      </div>
+
+      <div class="field">
+        <label class="label" for="amount">Amount</label>
+        <div class="amount">
+          <span class="amount__currency">$</span>
+          <input
+            id="amount"
+            class="input amount__input"
+            type="number"
+            step="0.01"
+            min="0"
+            placeholder="300.00"
+            formControlName="amount"
+            [attr.aria-invalid]="!!amountError"
+          />
+        </div>
+        @if (amountError) {
+          <div class="hint hint--danger">{{ amountError }}</div>
+        } @else {
+          <div class="hint muted">Must be greater than 0</div>
+        }
+      </div>
+
+      <div class="actions">
+        <button class="btn btn--primary" type="submit" [disabled]="!canSubmit()">
+          @if (isSubmitting()) {
+            <span class="btn__row">
+              <span class="btn__dot" aria-hidden="true"></span>
+              Submitting...
+            </span>
+          } @else {
+            Submit Payment
+          }
+        </button>
+
+        <div class="actions__meta muted">
+          Endpoint: <span class="mono">POST /switch/payment</span>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <div class="side">
+    @if (lastResult()) {
+      <app-payment-result-card [result]="lastResult()!" />
+    } @else {
+      <section class="placeholder card">
+        <div class="placeholder__title">Result will appear here</div>
+        <div class="placeholder__subtitle muted">
+          Submit a payment to see the transaction reference and status.
+        </div>
+      </section>
+    }
+
+    <app-transaction-history />
+  </div>
+</div>
+
