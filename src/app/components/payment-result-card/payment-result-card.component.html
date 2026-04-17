@@ -1,0 +1,23 @@
+<section class="result card" [class.result--approved]="isApproved" [class.result--declined]="!isApproved">
+  <header class="result__header">
+    <div class="result__status">
+      <span class="status-pill" [class.status-pill--approved]="isApproved" [class.status-pill--declined]="!isApproved">
+        {{ result.status }}
+      </span>
+      <span class="muted">Transaction Result</span>
+    </div>
+  </header>
+
+  <div class="result__grid">
+    <div class="kv">
+      <div class="kv__k">Transaction Reference</div>
+      <div class="kv__v mono">{{ result.transactionRef }}</div>
+    </div>
+
+    <div class="kv">
+      <div class="kv__k">Message</div>
+      <div class="kv__v">{{ result.message }}</div>
+    </div>
+  </div>
+</section>
+
