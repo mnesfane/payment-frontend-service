@@ -1,1 +1,72 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global design tokens + base styles (keep this file framework-agnostic) */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #0b1020;
+  --bg2: #0a0f1a;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-2: rgba(255, 255, 255, 0.18);
+
+  --text-strong: rgba(255, 255, 255, 0.95);
+  --text: rgba(255, 255, 255, 0.85);
+  --text-muted: rgba(255, 255, 255, 0.65);
+
+  --primary: #7c5cff;
+  --primary-2: #38bdf8;
+  --success: #34d399;
+  --danger: #fb7185;
+  --warning: #fbbf24;
+
+  --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.55);
+  --shadow-md: 0 18px 45px rgba(0, 0, 0, 0.4);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+  background: radial-gradient(900px 500px at 20% 15%, rgba(124, 92, 255, 0.22), transparent 60%),
+    radial-gradient(800px 400px at 80% 20%, rgba(56, 189, 248, 0.12), transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  color: var(--text);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Shared utility styles for enterprise UI consistency */
+.card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.045));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
